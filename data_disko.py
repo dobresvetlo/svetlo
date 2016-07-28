@@ -79,31 +79,30 @@ while True:
 
     #randhexcolor = randint(0,16581375)
     #randhexcolor = randint(0,100)
-    #data, addr = s.recvfrom(1024)
-    data = 'str1 0xfe3566 0x685677 0x111111 0x678392 0x111111 0xffeef1 0xefeeff 0x111111 0xffeef1 0xefeeff'
+    data, addr = s.recvfrom(1024)
+    #data = 'str1 0xfe3566 0x685677 0x111111 0x678392 0x111111 0xffeef1 0xefeeff 0x111111 0xffeef1 0xefeeff'
     
     randsleep = randint(1,200)
     #print("%s+%i",randcol,randhexcolor)
     #data, addr = s.recvfrom(1024)
     print data
 
-    a = []
+    colour_array = []
     for i in range(0,numpixels):
         count = 5 + i*9
         #print count
+        #walrus is just the dataset parsed (a single colour)
         walrus = data[count:count+6]
-        print walrus
+        #print walrus
         intwalrus = int(walrus,0)
-        print intwalrus
-        a.append(intwalrus)
+        #print intwalrus
+        colour_array.append(intwalrus)
 
-    print a
-
+    print colour_array
 
     for i in range(0,numpixels):
-        KOL = a[i]
-        print KOL
-        KOL = randint(0,16000000)
+        #take the corresponding colour out of the colour array and assign to pixel
+        KOL = colour_array[i]
         strip.setPixelColor(i, KOL)
     strip.show()
     color >>= randnum
