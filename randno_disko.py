@@ -40,8 +40,8 @@ def rgb2html(rgb_tuple):
 #exit(2)
 
 # Here's how to control the strip from any two GPIO pins:
-datapin   = 26
-clockpin  = 19
+datapin   = 13
+clockpin  = 6
 strip     = Adafruit_DotStar(numpixels, datapin, clockpin)
 
 # Alternate ways of declaring strip:

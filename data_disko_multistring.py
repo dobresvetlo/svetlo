@@ -39,10 +39,8 @@ def rgb2html(rgb_tuple):
 # Here's how to control the strip from any two GPIO pins:
 datapin   = 26
 clockpin  = 19
-#strip     = Adafruit_DotStar(numpixels, datapin, clockpin)
 
-datapin_ar = [26, 0, 0, 0 ,0]
-clockpin_ar = [19, 0, 0, 0, 0]
+
 
 # Alternate ways of declaring strip:
 # strip   = Adafruit_DotStar(numpixels)           # Use SPI (pins 10=MOSI, 11=SCLK)
@@ -52,17 +50,7 @@ clockpin_ar = [19, 0, 0, 0, 0]
 # See image-pov.py for explanation of no-pixel-buffer use.
 # Append "order='gbr'" to declaration for proper colors w/older DotStar strips)
 
-strip.begin()           # Initialize pins for output
-strip.setBrightness(64) # Limit brightness to ~1/4 duty cycle
 
-# Runs 10 LEDs at a time along strip, cycling through red, green and blue.
-# This requires about 200 mA for all the 'on' pixels + 1 mA per 'off' pixel.
-
-#1st line of data is str1 0xfe3566 0x685677 0x111111 0x678392 0x111111 0xffeef1 0xefeeff 0x111111 0xffeef1 0xefeeff
-
-head  = 0               # Index of first 'on' pixel
-tail  = -1              # Index of last 'off' pixel
-color = 0xFF0000        # 'On' color (starts red)
 
 
 #         GGRRBB
@@ -74,18 +62,18 @@ while True:
     rand_b = randint(0,24)
     randcol = hex(rand_g)+hex(rand_r)+hex(rand_b)
 
-    #here instead of lubosrandhex, we need to get data from udp which
-    #will define the colour - non randomly
-
     #randhexcolor = randint(0,16581375)
     #randhexcolor = randint(0,100)
     data, addr = s.recvfrom(1024)
-    #data = 'str1 0xfe3566 0x685677 0x111111 0x678392 0x111111 0xffeef1 0xefeeff 0x111111 0xffeef1 0xefeeff'
-    
     randsleep = randint(1,200)
     #print("%s+%i",randcol,randhexcolor)
     #data, addr = s.recvfrom(1024)
     print data
+    #parse out string number
+    stringno = data[3]
+    print stringno
+    stringno = int(stringno)
+    #print type(stringno)
 
     colour_array = []
     for i in range(0,numpixels):
@@ -99,6 +87,25 @@ while True:
         colour_array.append(intwalrus)
 
     print colour_array
+
+    datapin_ar = [26, 13, 0, 0 ,0]
+    clockpin_ar = [19, 6, 0, 0, 0]
+
+    #define what string yr talking to
+    #stringno = 1
+    strip     = Adafruit_DotStar(numpixels, datapin_ar[stringno - 1], clockpin_ar[stringno-1])
+
+    strip.begin()           # Initialize pins for output
+    strip.setBrightness(64) # Limit brightness to ~1/4 duty cycle
+
+    # Runs 10 LEDs at a time along strip, cycling through red, green and blue.
+    # This requires about 200 mA for all the 'on' pixels + 1 mA per 'off' pixel.
+
+    #1st line of data is str1 0xfe3566 0x685677 0x111111 0x678392 0x111111 0xffeef1 0xefeeff 0x111111 0xffeef1 0xefeeff
+
+    head  = 0               # Index of first 'on' pixel
+    tail  = -1              # Index of last 'off' pixel
+    color = 0xFF0000        # 'On' color (starts red)
 
     for i in range(0,numpixels):
         #take the corresponding colour out of the colour array and assign to pixel
