@@ -68,12 +68,12 @@ while True:
     randsleep = randint(1,200)
     #print("%s+%i",randcol,randhexcolor)
     #data, addr = s.recvfrom(1024)
-    print data
+    #print data
     #parse out string number
     stringno = data[3]
     print stringno
     stringno = int(stringno)
-    #print type(stringno)
+    print type(stringno)
 
     colour_array = []
     for i in range(0,numpixels):
@@ -86,7 +86,7 @@ while True:
         #print intwalrus
         colour_array.append(intwalrus)
 
-    print colour_array
+    #print colour_array
 
     datapin_ar = [26, 13, 0, 0 ,0]
     clockpin_ar = [19, 6, 0, 0, 0]
