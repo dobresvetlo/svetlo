@@ -13,10 +13,10 @@ from random import randint
 import threading
 
 #some initial constants and setup:
-NUMPIXELS = 450 # number of diods on a single strip (=90*5)
+NUMPIXELS = 10 # number of diods on a single strip (=90*5)
 UDP_IP = "127.0.0.1"
-UDP_PORT = 5005
-SLEEP_INTERVAL = 1
+UDP_PORT = 5004
+SLEEP_INTERVAL = 0.03
 ENABLE_BLINK = True #set to True if you want every second frame blank
 ENABLE_LOW_FREQ = False  #set to True if you want sending data in lower frequency
 
@@ -24,7 +24,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #                                     ^ Internet             ^ UDP
 blinkState = False
 sendstr = ""
-totalIterations = 0    
+totalIterations = 0
 Strips = ["", "", "", ""]
 
 
@@ -61,14 +61,14 @@ def fillTheStrip(name,stripIndex):
             elif stripIndex == 1:
                 color = "0,255,0"
             elif stripIndex == 2:
-                color = "255,0,0"    
+                color = "255,0,0"
             else:
                 #random barva:
                 colorR = randint(0,255)
                 colorG = randint(0,255)
                 colorB = randint(0,255)
                 color = str(colorR) + "," + str(colorG) + "," + str(colorB)
-        Strips[stripIndex] +=  RGB2hex(color) + " " 
+        Strips[stripIndex] +=  RGB2hex(color) + " "
 #    time.sleep(1)
 #    print "//// ending stripfill" + str(stripIndex)
 
@@ -91,16 +91,16 @@ class myThread (threading.Thread):
 #main()...
 if __name__ == '__main__':
     threadLock = threading.Lock()
-    
+
     signal.signal(signal.SIGINT, signal_handler)  #handle the Ctrl+C
     startTime = time.time()
-    print "blinking enabled?: " + str(ENABLE_BLINK)
+    print "blinking enabled?: " + str(ENABLE_BLINK) + " (sleep " + str(SLEEP_INTERVAL) + ")"
     print "low freq enabled?: " + str(ENABLE_LOW_FREQ)
     print "sending data on UDP port " + str(UDP_PORT) + "..."
-    
+
     while True:
         #--- single thread version:
-            
+
 #        fillTheStrip("t0",0)
 #        fillTheStrip("t1",1)
 #        fillTheStrip("t2",2)
@@ -113,33 +113,33 @@ if __name__ == '__main__':
         thread0 = myThread(0, "Thread-0", 0)
         thread1 = myThread(1, "Thread-1", 1)
         thread2 = myThread(2, "Thread-2", 2)
-        thread3 = myThread(3, "Thread-3", 3)    
+        thread3 = myThread(3, "Thread-3", 3)
         # Start new Threads
         thread0.start()
         thread1.start()
         thread2.start()
         thread3.start()
-        # Wait for all threads to complete        
+        # Wait for all threads to complete
         thread0.join()
         thread1.join()
         thread2.join()
         thread3.join()
-        
-#        print "Exiting Main Thread..."        
-        #/// multithread        
-        
+
+#        print "Exiting Main Thread..."
+        #/// multithread
+
         sock.sendto(
             Strips[0] + "|" + Strips[1] + "|" + Strips[2] + "|" + Strips[3] + "|",
             (UDP_IP, UDP_PORT)
         )
 #        print Strips
-#        print Strips[0] + "|" + Strips[1] + "|" + Strips[2] + "|" + Strips[3] + "|"    
-#        print "exitting..."        
+#        print Strips[0] + "|" + Strips[1] + "|" + Strips[2] + "|" + Strips[3] + "|"
+#        print "exitting..."
 #        sys.exit(-1)
         totalIterations += 1
-        Strips = ["", "", "", ""]        
+        Strips = ["", "", "", ""]
         if ENABLE_LOW_FREQ:
             time.sleep(SLEEP_INTERVAL)
-            print "WARNING: low freq mode enabled!"
+            ##print "WARNING: low freq mode enabled!"
         blinkState = not blinkState
 sys.exit(0)

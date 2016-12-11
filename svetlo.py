@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-# (copyleft) crysman and lubáček 2016
+
+# script to receive data and light-up the Adafruit-crysma-lubo LED walrus
+# this is the original, single-thread version
+# most comments are in Czech language, see/use the svetlo-mt.py version, it is newer, maintained and in English :)
+# (copyleft) crysman 2016
 
 import time
 import sys
@@ -33,14 +37,14 @@ for strip in Strips:
             except:
                 sys.stderr.write("ERR: brightness musí být číslo 1-255\n")
                 sys.exit(-1)
-    strip.setBrightness(brightness) # set brightness    
+    strip.setBrightness(brightness) # set brightness
 #//////////////////////////// /
 
 
 #---------------------------- síťařina (deme poslouchat na UDP):
 HOST = ''   # Symbolic name meaning all available interfaces
 PORT = 5005 # Arbitrary non-privileged port
- 
+
 # Datagram (udp) socket
 try :
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -48,17 +52,17 @@ try :
 except socket.error, msg :
     print 'Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit(-1)
- 
- 
+
+
 # Bind socket to local host and port
 try:
     s.bind((HOST, PORT))
 except socket.error , msg:
     print 'Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
     sys.exit(-1)
-     
+
 print 'Socket bind complete'
-#//////////////////////////// /  
+#//////////////////////////// /
 
 
 #---------------------------- pohandlujeme CTRL+C a vypneme LEDky
@@ -81,11 +85,11 @@ def RGB2hex(string):
     return int(hexcolor,16)
 
 
-# --------------------------- main()        
+# --------------------------- main()
 while True:
     #očekávaný formát je 6 hexahodnot oddělených mezerami + znak '|' jako oddělení stripů
     signal.signal(signal.SIGINT, signal_handler) # handler pro ukončení
-    rawdata, addr = s.recvfrom(16208) # (9bitů * 450 diod) + (2 bity oddělovač) * 4 stripy
+    rawdata, addr = s.recvfrom(16205) # = ((9bits * 450 LEDs) * 4 strips) = 16200 + (1bit separator * 4 strips) = 16204 bits + 1bit endline = 160205 bits
     if not rawdata:
         #nemáme data, breakujeme aktuální while iteraci:
         break
@@ -109,8 +113,8 @@ while True:
             ##print "%i:%i:%s" % (si,sip,pixelColor)
             Strips[si].setPixelColor(sip,int(pixelColor,16))
             ##print sip,int(pixelColor,16)
-            sip += 1 
-        Strips[si].show()    
+            sip += 1
+        Strips[si].show()
         si += 1
     ##time.sleep(5)
 exit(0) #0 = OK
