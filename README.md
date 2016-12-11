@@ -39,9 +39,9 @@ There are two reasons we are using STRING FORMAT (0xffffff with a | divider) of 
 - (or optionally test with svetlo-send.py first)
 
 ##Credits:
-Project leader and enthusiast: Lubos Zbranek (sursur)
-Python coding: crysman aka #McZ
-Ideal contributor: Tereza Jšj
+- Project leader and enthusiast: Lubos Zbranek (sursur)
+- Python coding: crysman aka #McZ
+- Idea(l) contributor: Tereza Jšj
 
 Nothing of this would be done without the [Adafruit DotStar Pi module](https://github.com/adafruit/Adafruit_DotStar_Pi)
 and [Derivative Touch Designer](http://www.derivative.ca/)
