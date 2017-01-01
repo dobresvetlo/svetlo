@@ -4,6 +4,7 @@
 # this is a multi-threading version
 # (copyleft) crysman 2016
 # changelog:
+    # 2016-12-13    * v.1.3 several minor changes
     # 2016-12-10    * v.1.2 additional code cleanup and comments made more accurate #McZ
     #                        + getopt and command line arguments support implemented #McZ
     # 2016-12-05    * v.1.1 some code cleanup and commenting added #McZ
@@ -19,26 +20,24 @@ import threading
 
 
 #some initial constants and variables:
-NUMPIXELS = 450 # number of LEDs (=90*5)
-BRIGHTNESS = 4 # (1-255)
 HOST = ''   # Symbolic name meaning all available interfaces
-PORT = 5005 # Arbitrary non-privileged port
-BOARDPINS = (
-# make sure that physical connections match these pins!
-    (26, 19), #for the strip0
-    (16, 17), #for the strip1
-    (13,   6), #for the strip2
-    (21, 20), #for the strip3
-)
+BOARDPINS = [
+# make sure that physical connections match these pins! If you do not know what are we talking about, you should check this out first:
+# https://learn.adafruit.com/dotstar-pi-painter/overview
+    [26, 19], #for the strip0
+    [16, 17], #for the strip1
+    [13,   6], #for the strip2
+    [21, 20], #for the strip3
+]
 
 Strips = []
 StripData = [
 # initialize 4 empty strips:
     [],    [],    [],    [],
 ]
-numpixels = NUMPIXELS
-brightness = BRIGHTNESS
-port = PORT
+numpixels = 450 # number of LEDs (=90*5)
+brightness = 4 # (1-255)
+port = 5005
 totalIterations = 0
 
 
@@ -106,11 +105,12 @@ def main(argv):
     global Strips
 
     def usage():
-        print 'svetlo.py [-h] [-n <numpixels> [-b <brightness>] [-p <port>]'
+        sys.stderr.write("Usage:\tsvetlo.py [-h] [-n <numpixels>] [-b <brightness>] [-p <port>]\n")
 
     try:
-        opts, args = getopt.getopt(argv,"h:n:b:p:",["numpixels=","brightness=","port="])
+        opts, args = getopt.getopt(argv,"hn:b:p:",["numpixels=","brightness=","port="])
     except getopt.GetoptError:
+        sys.stderr.write("ERR: unrecognized option, printing usage...\n")
         usage()
         sys.exit(2)
     for opt, arg in opts:
@@ -167,20 +167,18 @@ if __name__ == '__main__':
     main(sys.argv[1:])
 
     # let's prepare the networking stuff...
-    # Datagram (udp) socket
     try :
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        print 'Socket created, listening on UDP port ' + str(port)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # that is: IP, UDP
     except socket.error, msg :
         sys.stderr.write('ERR: Failed to create socket. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
         sys.exit(-1)
     # Bind socket to local host and port
     try:
         s.bind((HOST, port))
+        print 'Socket created and bound, listening on UDP port ' + str(port) + "..."
     except socket.error , msg:
         sys.stderr.write('ERR: Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
         sys.exit(-1)
-    print 'Socket bind complete'
 
     # let's initialize all strips:
     for strip in Strips:
@@ -220,6 +218,11 @@ if __name__ == '__main__':
             del StripData[si][-1]
             if len(StripData[si]) != numpixels:
                 sys.stderr.write("WARNING: StripData" + str(si) + ": #numpixels (" + str(numpixels) + ") does not correspond to number of data received (" + str(len(StripData[si]))  + ")\n")
+                print StripData[si]
+                ##sys.stderr.write("sleeping 10s...")
+                ##time.sleep(10)
+                ##sys.stderr.write("done sleeping.")
+
         #Initialize threads:
         #we use Raspberry2 with 4 threads, so let's use them all:
         #myThread(int thread_id, str thread_name, int LEDstrip_id)
@@ -244,4 +247,7 @@ if __name__ == '__main__':
 
         #that is one loop done, increment the counter:
         totalIterations += 1
-sys.exit(0)
+
+#we should never exit the loop, right?:
+sys.stderr.write("WARNING: infinite loop has ended, this is not supposed to happen...")
+sys.exit(-1)
