@@ -52,6 +52,7 @@ There are two reasons we are using STRING data format (0xffffff with a | divider
 - Project leader and enthusiast: Lubos Zbranek (sursur)
 - Python coding: crysman aka #McZ
 - Idea(l) contributor: Tereza Jšj
+- dotstar.c and dotstar.so: [Adafruit](https://github.com/adafruit/Adafruit_DotStar_Pi)
 
 Nothing of this would have be done without the [Adafruit DotStar Pi module](https://github.com/adafruit/Adafruit_DotStar_Pi)
 and [Derivative Touch Designer](http://www.derivative.ca/)

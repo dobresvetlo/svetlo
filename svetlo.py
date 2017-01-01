@@ -2,7 +2,10 @@
 
 # script to receive data and light-up the Adafruit-crysma-lubo LED walrus
 # this is the original, single-thread version
-# most comments are in Czech language, see/use the svetlo-mt.py version, it is newer, maintained and in English :)
+# most comments are in Czech language, see/use the svetlo-mt.py version, it is newer,
+# maintained, and in English :)
+#
+# imported dotstar.so credit: Adafruit (https://github.com/adafruit/Adafruit_DotStar_Pi)
 # (copyleft) crysman 2016
 
 import time

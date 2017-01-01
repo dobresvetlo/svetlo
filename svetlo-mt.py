@@ -3,10 +3,11 @@
 # script to receive data and light-up the Adafruit-crysma-lubo LED walrus
 # this is a multi-threading version
 # (copyleft) crysman 2016
+# imported dotstar.so credit: Adafruit (https://github.com/adafruit/Adafruit_DotStar_Pi)
 # changelog:
     # 2016-12-13    * v.1.3 several minor changes
     # 2016-12-10    * v.1.2 additional code cleanup and comments made more accurate #McZ
-    #                        + getopt and command line arguments support implemented #McZ
+    #               + getopt and command line arguments support implemented #McZ
     # 2016-12-05    * v.1.1 some code cleanup and commenting added #McZ
     # 2016-12-04    * v.1.0 debugged and working #McZ
     # 2016-11-06    * initial version based upon svetlo.py and svetlo-send-mt.py #McZ
