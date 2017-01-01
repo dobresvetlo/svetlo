@@ -19,12 +19,12 @@ There are two reasons we are using STRING data format (0xffffff with a | divider
 - every .py script should contain its own changelog at the beginning
 
 ###General
-- [x] Demo usage video [https://youtu.be/Ho7Xqsvebsc]
+- [x] Demo usage video (https://youtu.be/Ho7Xqsvebsc)
 - [ ] properly licence (copyleft) our python source codes and this readme (possibly GPL3?)
 - [ ] Describe the usage and workflow properly in more details ("how the hack shall I use it?!")
 
 ###Coding (Python/C)
-- [x] (since v.1.3) Dynamic pixel number (how many LED diods - "pixels" - strips have got)
+- [x] \(since v.1.3) Dynamic pixel number (how many LED diods - "pixels" - strips have got)
 - [ ] Dynamic number of strips
 - [ ] Add a new method (like _setStripColor_) to the Adafruit dotstar library to allow passing the whole pixel array instead of one pixel at a time (_setPixelColor_ method)
 - [ ] Implementation of the OLA (Open Lighting Architecture) library to control strips via DMX512 or Artnet
