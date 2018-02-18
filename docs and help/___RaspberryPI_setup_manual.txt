@@ -44,12 +44,17 @@ BASH:
 	
 	sudo apt-get install git python-dev python-pip
 	(ínstalling GIT - distributed version system, python-dev - Python development kit, PIP - python package management system)
+
+	cd /home
+	(go to your home folder)
 	
-	git clone https://github.com/adafruit/Adafruit_DotStar_Pi
-	(cloning repository from Github)
+	git clone https://github.com/dobresvetlo/svetlo
+	(cloning repository DOBRE SVETLO from Github)
 
+	cd /home/svetlo
+	(go to cloned folder)
 
-- for copying and managing files use WinSCP, Filezilla or other SCP client
+- eventually for copying and managing files use WinSCP, Filezilla or other SCP client
 - configure connection in WinSCP:
 
 	Session
@@ -67,22 +72,21 @@ BASH:
 
 BASH:
 
-	sudo nano /home/Adafruit_DotStar_Pi/strandtes.py
+	sudo nano /home/svetlo/strandtest.py
 	(edit output pins and lenght of your testing APA102 strip)
 
-	sudo python /home/Adafruit_DotStar_Pi/strandtes.py
+	sudo python /home/svetlo/strandtest.py
 	(LED should start making rainbow chase)
 
 
 ////// DOBRE SVETLO //////
 
-- copy svetlo.py into the same directory as library (/home/Adafruit_DotStar_Pi/) or copy dotstar.so library to your folder
 BASH:
-	- edit output pins, stripcount and lenght
+	- edit output pins, stripcount and lenght of your LED strip
 	sudo nano /home/Adafruit_DotStar_Pi/svetlo.py
 	
 	- run DOBRE SVETLO
-	sudo python /home/Adafruit_DotStar_Pi/svetlo.py
+	sudo python /home/svetlo/strandtest.py
 	(program should wait for data)
 
 - run TouchDesigner to send some data and update output IP and pixelcount matching Raspberry's
