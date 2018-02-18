@@ -1,11 +1,10 @@
 ---------------------------
 
 Instalation RaspberryPI and Dotstar Libraries 
-(https://learn.adafruit.com/dotstar-pi-painter/raspberry-pi-setup)
 
 - install system Raspbian on a micro SD card (https://www.raspberrypi.org/documentation/installation/installing-images/)
 - get it running
-- possible to use Raspberry remotely or with a) monitor, mouse and keyboard or b) via SSH protocol remotely (recomended)
+- possible to use Raspberry with a) monitor, mouse and keyboard or b) via SSH protocol remotely (recomended)
 
 a) with monitor mouse and keyboard skip b)
 	- log in (password "raspberry")
@@ -51,7 +50,7 @@ BASH:
 
 
 - for copying and managing files use WinSCP, Filezilla or other SCP client
-- configure connection:
+- configure connection in WinSCP:
 
 	Session
 
