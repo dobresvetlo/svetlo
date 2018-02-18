@@ -1,0 +1,91 @@
+---------------------------
+
+Instalation RaspberryPI and Dotstar Libraries 
+(https://learn.adafruit.com/dotstar-pi-painter/raspberry-pi-setup)
+
+- install system Raspbian on a micro SD card (https://www.raspberrypi.org/documentation/installation/installing-images/)
+- get it running
+- possible to use Raspberry remotely or with a) monitor, mouse and keyboard or b) via SSH protocol remotely (recomended)
+
+a) with monitor mouse and keyboard skip b)
+	- log in (password "raspberry")
+	- connect to a wifi or a cable, open a terminal ('Command' + T), skip b) and follow next steps
+
+b) via SSH (remotely from a Terminal)
+	- to allow SSH on RaspberryPI, make file called SSH on a Raspberry root system disk
+	- connect RaspberryPI using UTP cable
+	- open Terminal (on WIndows you can use Cygwin)
+
+	BASH: (bash is a unix command shell - Terminal)
+		ssh pi@<RASPBERRY_IP_ADRESS> (could be found in your router UI, it is good to Bind IP adress to your RaspberryPI MAC adress to stay similar)
+		- after prompting password use "raspberry"
+		sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+		(sudo is gives command superuser rights - password will be requested; nano is basic text editor)
+		- add the “network” section shown here, changing the network name and password to match your setup (be precise with spaces etc., this code should be exact for proper work):
+
+    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+    update_config=1
+    network={
+    	ssid="my-network-name"
+    	psk="my-network-password"
+    	scan_ssid=1
+    }
+
+    	- reboot RaspberryPi
+    	- via Terminal connect with 
+    	BASH:
+    		ssh pi@<RASPBERRY_IP_ADRESS> (eg. 192.168.1.15)
+
+BASH: 
+	sudo raspi-config (Interfacing options > allow SPI; allow Expand System)
+	(configuring board)
+	
+	sudo apt-get update
+	(this will update repositories for installing)
+	
+	sudo apt-get install git python-dev python-pip
+	(ínstalling GIT - distributed version system, python-dev - Python development kit, PIP - python package management system)
+	
+	git clone https://github.com/adafruit/Adafruit_DotStar_Pi
+	(cloning repository from Github)
+
+
+- for copying and managing files use WinSCP, Filezilla or other SCP client
+- configure connection:
+
+	Session
+
+		File Protocol: SCP
+		Host name: The IP address of you Raspberry Pi
+		User name: pi
+		Password: raspberry
+
+	SCP /Shell
+
+		Shell: sudo su – (if you want to be able to write to protected directories, e.g. /var/ww/ to transfer files for apache web server) 
+
+- lets start, everyone likes rainbow chase, and test your hardware and software setup
+
+BASH:
+
+	sudo nano /home/Adafruit_DotStar_Pi/strandtes.py
+	(edit output pins and lenght of your testing APA102 strip)
+
+	sudo python /home/Adafruit_DotStar_Pi/strandtes.py
+	(LED should start making rainbow chase)
+
+
+////// DOBRE SVETLO //////
+
+- copy svetlo.py into the same directory as library (/home/Adafruit_DotStar_Pi/) or copy dotstar.so library to your folder
+BASH:
+	- edit output pins, stripcount and lenght
+	sudo nano /home/Adafruit_DotStar_Pi/svetlo.py
+	
+	- run DOBRE SVETLO
+	sudo python /home/Adafruit_DotStar_Pi/svetlo.py
+	(program should wait for data)
+
+- run TouchDesigner to send some data and update output IP and pixelcount matching Raspberry's
+
+BLINK!
