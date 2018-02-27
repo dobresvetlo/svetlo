@@ -48,7 +48,7 @@ BASH:
 	cd /home
 	(go to your home folder)
 	
-	git clone https://github.com/dobresvetlo/svetlo
+	sudo git clone https://github.com/dobresvetlo/svetlo
 	(cloning repository DOBRE SVETLO from Github)
 
 	cd /home/svetlo
@@ -92,3 +92,19 @@ BASH:
 - run TouchDesigner to send some data and update output IP and pixelcount matching Raspberry's
 
 BLINK!
+
+
+
+
+
+
+
+_______________________________________
+
+LIST OF COMPONENTS
+_______________________________________
+
+- Raspberry PI 3B 
+	(Depends on amount of LEDs and strips used - for Quad processors could be used multithreading code)
+- Breadboard (Full sized)
+- Quad Level-Shifter (3V to 5V) (74AHCT125 or similar, For each 2 LED strips
