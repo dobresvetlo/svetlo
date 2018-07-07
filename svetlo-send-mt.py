@@ -1,8 +1,26 @@
 # -*- coding: utf-8 -*-
+
 # script to send some data to Adafruit-crysma-lubo-disko LED walrus
 # this is a multithreading version created by crysman just to learn multithreading in Python, it is not supposed to be maintained and/or used
 # IMPORTANT: please, use the standard svetlo-send.py instead, since it has more features
-# (copyleft) crysman 2016
+# (copyleft) crysman 2016, crysman@seznam.cz
+
+# LICENSE
+# This file is part of svetlo.
+#
+# svetlo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# svetlo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with svetlo.  If not, see <https://www.gnu.org/licenses/>.
+
 # changelog:
     # 2016-10-29    * initial version based upon corresponding non-mt
 
@@ -18,7 +36,7 @@ print "IMPORTANT: please, use the standard svetlo-send.py instead, since it has 
 #some initial constants and setup:
 NUMPIXELS = 10 # number of diods on a single strip (=90*5)
 UDP_IP = "127.0.0.1"
-UDP_PORT = 5005
+UDP_PORT = 6112
 SLEEP_INTERVAL = 0.03
 ENABLE_BLINK = True #set to True if you want every second frame blank
 ENABLE_LOW_FREQ = False  #set to True if you want sending data in lower frequency

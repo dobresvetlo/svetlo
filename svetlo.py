@@ -1,12 +1,30 @@
 # -*- coding: utf-8 -*-
 
 # script to receive data and light-up the Adafruit-crysma-lubo LED walrus
-# this is the original, single-thread version
+# WARNING: this is the original, single-thread and OBSOLETE version
 # most comments are in Czech language, see/use the svetlo-mt.py version, it is newer,
-# maintained, and in English :)
-#
+# maintained, and in English
+
 # imported dotstar.so credit: Adafruit (https://github.com/adafruit/Adafruit_DotStar_Pi)
-# (copyleft) crysman 2016
+# (copyleft) crysman 2016, crysman@seznam.cz
+
+# LICENSE
+# This file is part of svetlo.
+#
+# svetlo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# svetlo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with svetlo.  If not, see <https://www.gnu.org/licenses/>.
+
+print "WARNING: this is obsolete single-thread version of svetlo, use svetlo-mt.py instead"
 
 import time
 import sys
@@ -21,10 +39,10 @@ import socket
 NUMPIXELS = 450 # počet LEDek (=90*5)
 BRIGHTNESS = 4 # svítivost (1-255)
 Strips = [
-        Adafruit_DotStar(NUMPIXELS, 26, 19),
-        Adafruit_DotStar(NUMPIXELS, 16, 17),
-        Adafruit_DotStar(NUMPIXELS, 13, 6),
-        Adafruit_DotStar(NUMPIXELS, 21, 20)
+        Adafruit_DotStar(NUMPIXELS, 23, 24),
+        Adafruit_DotStar(NUMPIXELS, 17, 27),
+        Adafruit_DotStar(NUMPIXELS, 5, 6),
+        Adafruit_DotStar(NUMPIXELS, 19, 26)
     ]
 for strip in Strips:
     strip.begin()           # Initialize pins for output
@@ -46,7 +64,7 @@ for strip in Strips:
 
 #---------------------------- síťařina (deme poslouchat na UDP):
 HOST = ''   # Symbolic name meaning all available interfaces
-PORT = 5005 # Arbitrary non-privileged port
+PORT = 6112 # Arbitrary non-privileged port
 
 # Datagram (udp) socket
 try :

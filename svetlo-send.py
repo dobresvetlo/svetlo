@@ -1,7 +1,25 @@
 # -*- coding: utf-8 -*-
+
 # script to send some data to Adafruit-crysma-lubo-disko LED walrus
-# (copyleft) crysman 2016
-# changelog:
+# copyright (copyleft) crysman 2016, crysman@seznam.cz
+
+# LICENSE
+# This file is part of svetlo.
+#
+# svetlo is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# svetlo is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with svetlo.  If not, see <https://www.gnu.org/licenses/>.
+
+# CHANGELOG:
     # 2016-12-13    * v.1.3
     #                       + command line arguments added to match svetlo-mt.py + some additional ones added
     #                       * several minor changes
@@ -20,8 +38,8 @@ import socket
 from random import randint
 
 #some initial constants and variables:
-numpixels = 450 # number of LEDs (=90*5)
-port = 5005
+numpixels = 10 # number of LEDs (=90*5)
+port = 6112 #network port (crysman just likes Blizzard Entertainment's games...)
 ipDestination = '127.0.0.1' #'localhost'
 enableBlink = False #blinking (every odd iteration brightness=0)
 enableDelay = False #to have some delay between iterations

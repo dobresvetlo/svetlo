@@ -1,0 +1,18 @@
+# a systemd config file for svetlo Walrus LED (https://github.com/dobresvetlo/svetlo)
+# version 1.4a
+
+[Unit]
+Description=svetlo Walrus LED
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python svetlo-mt.py
+WorkingDirectory=/home/pi/svetlo
+StandardOutput=inherit
+StandardError=inherit
+Restart=on-failure
+RestartSec=3
+#User=pi
+
+[Install]
+WantedBy=multi-user.target
