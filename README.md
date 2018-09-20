@@ -1,5 +1,5 @@
 # svetlo
-version 1.41
+version 1.42
 
 ## 1. Abstract
 This is the ulti multi LED walrus crazy disco aka "svetlo" (a project to light up some APA102 5050 LED strips using Raspberry Pi and Python)
@@ -13,7 +13,7 @@ _Svetlo_ means _light_ in Czech. The aim of this project is to design an open-so
 Changelog is part of every source code file in separate.
 
 ## 4. Usage, workflow, HOWTO
-(info based on Raspbian Stretch 2018-04-18 running on RPi3)
+(info based on Raspbian Stretch 2018-04-18 running on RPi3 with Python2)
 
 ### Prepare Raspberry Pi
 1. Install OS Raspbian on a micro SD card:
@@ -83,6 +83,7 @@ Go to home directory and get latest _svetlo_ from GitHub:
    sudo python ./strandtest.py
    ```
    (some LEDs should start making rainbow chase)
+   (`python` must be Python in version 2.x, check with `python --version`)
 
 ### Let's run it at last!
 Make sure you are in svetlo directory:
