@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-f
 
-# svetlo - a script to receive data and light-up the Adafruit-crysman-lubo LED walrus
+# svetlo - a python2 script to receive data and light-up the Adafruit-crysman-lubo LED walrus
 # this is a multi-threading version
 #
 # copyright (copyleft) crysman #McZ 2016-2018, crysman@seznam.cz
@@ -24,8 +24,13 @@
 
 # TODO:
 #   - data (colors) reproduced as BGR, not RGB (B and R swapped)
+#   - add some input validation (and potencially handle it), especially:
+#     line endings (CRLF vs LF), extra spaces (or newlines), ilegal characters...
 
 # CHANGELOG:
+    # 2019-01-27    * v.1.5 #McZ
+    #                 * .ini format changed, specifically boardpins setup - now lowercase and separated by comma
+    #                 + simple webserver added to modify conf .ini file via HTML web page
     # 2018-07-06    * v.1.41 #McZ
     #                 * released under free and open source licence GPLv3
     #                 * default UDP port set to 6112 (crysman just likes Blizzard Entertainment's games :)
@@ -46,7 +51,7 @@
     # 2016-12-04    * v.1.0 debugged and working #McZ
     # 2016-11-06    * initial version based upon svetlo.py and svetlo-send-mt.py #McZ
 
-version = "1.41"
+version = "1.5"
 
 import time
 import sys, getopt
@@ -69,11 +74,13 @@ brightness = int(config.get("config", "brightness"))
 numpixels = int(config.get("config", "numpixels"))
 #currently, only 4 strips are supported (hard-coded just here:
 BOARDPINS = [
-  config.get("config", "BOARDPINS1").split(),
-  config.get("config", "BOARDPINS2").split(),
-  config.get("config", "BOARDPINS3").split(),
-  config.get("config", "BOARDPINS4").split(),
+  config.get("config", "boardpins1").split(','),
+  config.get("config", "boardpins2").split(','),
+  config.get("config", "boardpins3").split(','),
+  config.get("config", "boardpins4").split(','),
 ]
+
+print BOARDPINS
 
 Strips = []
 StripData = [

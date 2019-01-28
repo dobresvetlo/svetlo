@@ -1,8 +1,8 @@
 # svetlo
-version 1.42
+version 1.5
 
 ## 1. Abstract
-This is the ulti multi LED walrus crazy disco aka "svetlo" (a project to light up some APA102 5050 LED strips using Raspberry Pi and Python)
+This is the ulti multi LED walrus crazy disco aka "svetlo" (a project to light up some APA102 5050 LED strips using Raspberry Pi and Python2)
 copyright (copyleft) _crysman #McZ_ and _lubo_ 2016-2018, GNU General Public Licence v3 ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html))
 
 
@@ -94,6 +94,13 @@ cd ~/svetlo
    ```
    nano svetlo.ini
    ```
+   
+   or use local webserver to change values quite comfortably via webpage - just open http://<raspberryPi_IP_address> in your favorite browser, e.g.:
+   ```
+   http://192.168.1.77
+   ```
+   (replace with actual IP address)
+   
 1. There are two options how to use _svetlo_ via `svetlo-mt.py`:
    1. Use it offline letting it to read data from local datafiles (default):
       ```
@@ -139,9 +146,15 @@ If everything is OK, enable the service to start on every (re)boot:
 sudo systemctl enable svetlo.service
 ```
 
+NOTE: follow the same steps to enable configuration via webserver (HTML page), just use `svetlo-webserver.service` instead
+
 ## 5. FAQ
+- __I've got some errors, what to do?__
+Read the output in the terminal carefully. If you are using svetlo as a service (systemctl) (and we believe you are :) use `journalctl -u svetlo.service` (or `svetlo-webserver.service`) to have a look.
 - __Why are you using "sudo" all the time?__
 The Adafruit library needs access to memory via _/dev/mem_.
+- __Why not Python3?__
+Unfortunately Adafruit Dotstar does not support python3: https://forums.adafruit.com/viewtopic.php?t=121835
 - __Why string rawdata?__
 There are two reasons we are using raw string data format (0xffffff with a | divider) over UDP/IP:
   - easy and readable use of datafiles to have ready-to-use "programs" available to play them in infinite loop
@@ -165,6 +178,7 @@ There is an old 2016 demo usage video on YT: https://youtu.be/Ho7Xqsvebsc
 - [x] Change default values via configuration file (`svetlo.ini`)
 - [x] Possibility to read data from files and "play them" in infinite loop while RPi is offline
 - [x] Dynamic pixels number (how many LED diods - "pixels" - strips have got)
+- [x] Make some UI - changing svetlo parameters via web page (since v.1.5)
 
 ### TouchDesigner
 - [ ] Variables for number of strips and pixel count
@@ -188,5 +202,9 @@ You should have received a copy of the GNU General Public License along with thi
 - Python coding, documentation, git package: _crysman_ aka _#McZ_
 - Initial idea(l) contributor: _Tereza Jšj_
 - dotstar.c and dotstar.so: [Adafruit](https://github.com/adafruit/Adafruit_DotStar_Pi)
+- Bottle.py simple webserver: http://bottlepy.org/ , Copyright (c) 2009-2018, Marcel Hellkamp, MIT license
 
-Nothing of this would have been done without the [Adafruit DotStar Pi module](https://github.com/adafruit/Adafruit_DotStar_Pi) and [Derivative Touch Designer](http://www.derivative.ca/), Thanks!
+Nothing of this would have been done without the [Adafruit DotStar Pi module](https://github.com/adafruit/Adafruit_DotStar_Pi),
+[Derivative Touch Designer](http://www.derivative.ca/) and [Bottle.py](http://bottlepy.org/)
+
+Thanks!
