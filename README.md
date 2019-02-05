@@ -1,9 +1,9 @@
 # svetlo
-version 1.5
+version 1.6
 
 ## 1. Abstract
 This is the ulti multi LED walrus crazy disco aka "svetlo" (a project to light up some APA102 5050 LED strips using Raspberry Pi and Python2)
-copyright (copyleft) _crysman #McZ_ and _lubo_ 2016-2018, GNU General Public Licence v3 ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html))
+copyright (copyleft) _crysman #McZ_ and _lubo_ 2016-2019, GNU General Public Licence v3 ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html))
 
 
 ## 2. About
@@ -16,7 +16,7 @@ Changelog is part of every source code file in separate.
 (info based on Raspbian Stretch 2018-04-18 running on RPi3 with Python2)
 
 ### Prepare Raspberry Pi
-1. Install OS Raspbian on a micro SD card:
+1. Install OS Raspbian on a micro SD card (_Raspbian Stretch Lite_ is OK, you should not need full desktop):
    https://www.raspberrypi.org/documentation/installation/installing-images/
 1. Insert the SD card properly into RaspberryPi ("RPi") and use it:
     1. with display, mouse and keyboard (easy), or
@@ -101,21 +101,21 @@ cd ~/svetlo
    ```
    (replace with actual IP address)
    
-1. There are two options how to use _svetlo_ via `svetlo-mt.py`:
+1. There are two options how to use _svetlo_ via `svetlo.py`:
    1. Use it offline letting it to read data from local datafiles (default):
       ```
-      sudo python svetlo-mt.py
+      sudo python svetlo.py
       ```
    1. or via network using UDP:
       ```
-      sudo python svetlo-mt.py --listen
+      sudo python svetlo.py --listen
       ```
       (It is now listening on default UDP port and waiting for data). Send some data:
-      - Run the TouchDesigner file and override the IP address accordingly to send the data
+      - Open the .toe TouchDesigner file and override the IP address accordingly to send the data
       - (or optionally test with `svetlo-send.py` first
 1. There is a simple help included, many things might be overriden from command line as arguments:
    ```
-   python svetlo-mt.py --help
+   python svetlo.py --help
    ```
 
 ### Make it start automatically on (re)boot
@@ -149,13 +149,15 @@ sudo systemctl enable svetlo.service
 NOTE: follow the same steps to enable configuration via webserver (HTML page), just use `svetlo-webserver.service` instead
 
 ## 5. FAQ
-- __I've got some errors, what to do?__
+- __It is not working! (or "I've got some strange errors.."), what to do?__
 Read the output in the terminal carefully. If you are using svetlo as a service (systemctl) (and we believe you are :) use `journalctl -u svetlo.service` (or `svetlo-webserver.service`) to have a look.
 - __Why are you using "sudo" all the time?__
 The Adafruit library needs access to memory via _/dev/mem_.
 - __Why not Python3?__
 Unfortunately Adafruit Dotstar does not support python3: https://forums.adafruit.com/viewtopic.php?t=121835
-- __Why string rawdata?__
+- __Why .wlrs file extension? __
+Because .dat is so impersonal and boring... and because we call all this "svetlo" project also "Walrus"
+- __Why string rawdata in such a long format?__
 There are two reasons we are using raw string data format (0xffffff with a | divider) over UDP/IP:
   - easy and readable use of datafiles to have ready-to-use "programs" available to play them in infinite loop
   - the Adafruit dotstar library supports similar format natively as a raw input (bytearray) - which needs to be examined further to optimize more
@@ -166,13 +168,13 @@ There is an old 2016 demo usage video on YT: https://youtu.be/Ho7Xqsvebsc
 
 ## 6. Further ideas/TODO
 ### Coding (Python/C)
-- [ ] Dynamic number of strips
+- [ ] Upgrade to Python3 (requires whether Adafruit dotstar upgrade or switch to other library)
+- [ ] Dynamic number of strips (now 4 is hardcoded)
 - [ ] Add a new method (like _setStripColor_) to the Adafruit dotstar library to allow passing the whole pixel array instead of one pixel at a time (_setPixelColor_ method)
-- [ ] Implementation of the OLA (Open Lighting Architecture) library to control strips via DMX512 or Artnet
+- [ ] Implementation of the sACN (E1.31) library to control LED strips
 - [ ] Sending raw bytearray from Touch Designer for direct input into the library (should be faster)
 - [ ] Test another SPI methods for filling strips
 - [ ] Add TCP/IP support (currently only UDP is supported)
-- [ ] Better "throttle" variables balancing/adjusting in the Adafruit dotstar library to avoid flickering
 - [x] Release _svetlo_ under GPLv3
 - [x] Automatic start on (re)boot - might be activated via _systemd_ and included `svetlo.service` file
 - [x] Change default values via configuration file (`svetlo.ini`)
@@ -181,21 +183,31 @@ There is an old 2016 demo usage video on YT: https://youtu.be/Ho7Xqsvebsc
 - [x] Make some UI - changing svetlo parameters via web page (since v.1.5)
 
 ### TouchDesigner
-- [ ] Variables for number of strips and pixel count
-- [ ] More efficient RGB to STRING conversion
-- [ ] Graphical user interface
-- [ ] Implementation of recording data into file (to play them in a loop)
+- [x] Variables for number of strips and pixel count
+- [x] More efficient RGB to STRING conversion
+- [x] Graphical user interface
+- [x] Implementation of recording data into file (to play them in a loop)
+
+### web GUI controller
+- [ ] rewrite HTML/CSS to responsive design
+- [x] web controller running on local simple webserver
 
 ## 7. License
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-## 8. List of components
-!TODO! UPDATE this part:
-- __Raspberry PI 3B__ (depending on amount of LEDs and strips used - if not many, lower RPis might be used, too. For quad processors use multithreading version)
+## 8. Minimum components requirements list
+- __Raspberry Pi zero__
+- __LED strip APA102__ or similar
+- some __wires__
+
+## 9. Recommended components requiremets list
+- __Raspberry Pi 3B__ or similar (depending on amount of LEDs and strips used, lower RPis might be used, too)
 - __Breadboard__ (Full sized)
-- __Quad Level-Shifter (3V to 5V)__ (74AHCT125 or similar, For each 2 LED strips)
+- __Quad Level-Shifter (3V to 5V)__ (74AHCT125, 74AHC245 or similar)
+- __LED strip(s) APA102__ or similar
+- some __wires__
 
 ## 9. Credits
 - Project leader, enthusiast and hardware specialist: _Lubos Zbranek (sursur)_

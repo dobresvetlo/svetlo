@@ -48,7 +48,7 @@ host=
 ;!IMPORTANT: newlines in UNIX format (LF)
 ;(leave blank to read via UDP from network)
 ;datafilename=
-datafilename=120px_slownoise.dat
+datafilename=120px_slownoise.wlrs
 
 ;delay (in s)
 ;(might be changed by passing -d argument)

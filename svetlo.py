@@ -28,6 +28,9 @@
 #     line endings (CRLF vs LF), extra spaces (or newlines), ilegal characters...
 
 # CHANGELOG:
+    # 2019-02-06    * v.1.6 #McZ
+    #                 * svetlo-mt.py renamed to svetlo.py, the old single-thread version has been moved to _obsolete folder
+    #                 (other changes made in other files - see git repo)
     # 2019-01-27    * v.1.5 #McZ
     #                 * .ini format changed, specifically boardpins setup - now lowercase and separated by comma
     #                 + simple webserver added to modify conf .ini file via HTML web page
@@ -51,7 +54,7 @@
     # 2016-12-04    * v.1.0 debugged and working #McZ
     # 2016-11-06    * initial version based upon svetlo.py and svetlo-send-mt.py #McZ
 
-version = "1.5"
+version = "1.6"
 
 import time
 import sys, getopt
@@ -164,8 +167,8 @@ def main(argv):
     global version
 
     def usage():
-        print("svetlo-mt.py version " + version + ", GPL license v3")
-        print("Usage: svetlo-mt.py [-h] [-V] [-n <numpixels>] [-d <delay (in s)>] [-b <brightness>] [-l] [-p <port>] [-f <filename>]")
+        print("svetlo.py version " + version + ", multithread, GPL license v3")
+        print("Usage: svetlo.py [-h] [-V] [-n <numpixels>] [-d <delay (in s)>] [-b <brightness>] [-l] [-p <port>] [-f <filename>]")
 
     try:
         opts, args = getopt.getopt(sys.argv[1:],"n:d:b:p:f:lhV",["numpixels=","delay=","brightness=","port=","file=","listen","help","version"])

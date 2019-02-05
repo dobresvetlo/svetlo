@@ -7,6 +7,7 @@
 # crysman (copyleft) 2018-2019
 
 # CHANGELOG:
+    # 2019-02-06    * v.1.6 minor changes in HTML, brightness moved to bottom, .dat files renamed to .wlrs
     # 2019-01-27    * initial release: v.1.5 (v. num. synced with svetlo-mt.py)
 
 # TODO:
@@ -35,7 +36,7 @@
 #Homepage and documentation: http://bottlepy.org/ , Copyright (c) 2009-2018, Marcel Hellkamp.
 
 
-version = "1.5"
+version = "1.6"
 
 import sys, glob
 import subprocess #(to be able to make system calls)
@@ -52,7 +53,7 @@ try:
 except ImportError:
 	from ConfigParser import ConfigParser  # ver. < 3.0
 
-sys.stderr.write("svetlo-sebserver.py version " + version + ", GPL license v3\n")
+sys.stderr.write("svetlo-webserver.py version " + version + ", GPL license v3\n")
 
 #webserver stuff:
 #provide any .ico file:
@@ -78,12 +79,12 @@ def homepage():
 	datafilename = config.get('config', 'datafilename')
 	delay = config.get('config', 'delay')
 
-	#find available .dat files to select from:
+	#find available .wlrs files to select from:
 	selectOptionsList = []
 	selectOptions = ""
 	if (not datafilename):
 		selectOptions += '<option value="none" selected>none</option>' + '\n'
-	for filename in glob.glob('*.dat'):
+	for filename in glob.glob('*.wlrs'):
 		selectOptionsList.append(filename)
 	for filename in selectOptionsList:
 		if filename == datafilename:
@@ -91,7 +92,7 @@ def homepage():
 		else:
 			selectOptions += '<option value="' + filename + '">' + filename + '</option>' + '\n'
 
-	debugInfo = '<a href="https://github.com/dobresvetlo/svetlo">svetlo</a> version ' + version
+	debugInfo = '<a href="https://github.com/dobresvetlo/svetlo">Svetlo</a> ' + version
 	#debugInfo += str(selectOptions)
 
 	#let's prepare the page:
@@ -211,7 +212,6 @@ function usefileHandler() {
 	<label for="ip">IP Address</label><br>
 	<input type="text" id="ip" name="ipaddress" value="''' + ipaddress + '''" disabled title="currently not available to modify"><br>
 
-	<br>
 	<hr>
 
 	<label for="numpixels">Number of leds per branch</label><br>
@@ -225,10 +225,6 @@ function usefileHandler() {
 	  <option value="4" selected>4</option>
 	</select><br>
 
-	<label for="brightness">Brightness</label><br>
-	<input type="number" id="brightness" name="brightness" min="1" max="255" value="''' + brightness + '''"><br>
-
-	<br>
 	<hr>
 
 	<label for="boardpin1a">Boardpins branch 1 (Dat, Clk)</label><br>
@@ -247,10 +243,9 @@ function usefileHandler() {
 	<input class="boardpin" type="number" id="boardpin4a" name="boardpin4a" min="1" max="40" value="''' + boardpins4[0] + '''">
 	<input class="boardpin" type="number" id="boardpin4b" name="boardpin4b" min="1" max="40" value="''' + boardpins4[1] + '''"><br>
 
-	<br>
 	<hr>
 
-	<label for="usefile">Live input &emsp; &emsp; &emsp; &emsp; &nbsp; From file</label><br>
+	<label for="usefile">Live input/OFF &nbsp; &nbsp; From file</label><br>
 	<input class="slider" type="range" id="usefile" name="usefile" min="0" max="1" onchange="usefileHandler();"><br>
 
 	<div id="datafilenamesection">
@@ -258,7 +253,7 @@ function usefileHandler() {
 	<select id="datafilename" name="datafilename">''' + selectOptions + '''
 	</select><br>
 	<label for="lednewfile" class="NA">LED File Upload</label><br>
-	<input type="file" id="lednewfile" name="lednewfile" accept=".dat" disabled title="currently not available"><br>
+	<input type="file" id="lednewfile" name="lednewfile" accept=".wlrs" disabled title="currently not available"><br>
 	</div>
 
 	<div id="portsection">
@@ -266,15 +261,20 @@ function usefileHandler() {
 	<input type="number" id="port" name="port" min="1" max="65535" value="''' + port + '''"><br>
 	</div>
 
+	<label for="brightness">Brightness</label><br>
+	<input type="number" id="brightness" name="brightness" min="1" max="255" value="''' + brightness + '''"><br>
+
 	<label for="delay">Playback delay</label><br>
 	<input type="number" id="delay" name="delay" min="0" step="0.01" value="''' + delay + '''"><br>
+
+        <hr>
 
 	<input type="submit" value="Save settings"><br>
 	<input type="reset" value="Cancel" onclick="defaultVisibility();">
 
   </form>
 </div>
-<small>DEBUG: '''+ debugInfo +'''</small>
+<small>'''+ debugInfo +'''</small>
 </body>
 </html>
 '''

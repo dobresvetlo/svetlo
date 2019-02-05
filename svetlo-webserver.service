@@ -1,13 +1,13 @@
 # a systemd config file for svetlo Walrus LED (https://github.com/dobresvetlo/svetlo)
 # setup webserver (to change config values via web page)
-# version 1.5
+# version 1.6
 
 [Unit]
 Description=svetlo Walrus LED setup webserver
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 svetlo-webserver.py
+ExecStart=/usr/bin/python svetlo-webserver.py
 WorkingDirectory=/home/pi/svetlo
 StandardOutput=inherit
 StandardError=inherit
